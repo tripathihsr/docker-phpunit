@@ -48,7 +48,7 @@ class AppTest extends TestCase {
   /**
    * Provider for testPrintSquareRootOfNumberOfFilesInDirectory().
    */
-  public function providerPrintSquareRootOfNumberOfFilesInDirectory() {
+  static public function providerPrintSquareRootOfNumberOfFilesInDirectory() {
     return [
       [
         'Square root of 9 is 3.0',
@@ -109,7 +109,7 @@ class AppTest extends TestCase {
   /**
    * Provider for testSquareRoot().
    */
-  public function providerSquareRoot() {
+  static public function providerSquareRoot() {
     return [
       [
         'Negative number throws exception',

@@ -1,8 +1,7 @@
 FROM composer
 
 RUN mkdir /phpunit && cd /phpunit && \
-  export COMPOSER_MEMORY_LIMIT=-1 && \
-  composer require phpunit/phpunit
+  composer require phpunit/phpunit:^9
 
 WORKDIR /app
 
