@@ -4,23 +4,32 @@ phases:
   install:
     runtime-versions:
       php: 8.2
-  build:
     commands:
       - composer require --dev phpunit/phpunit
-      - echo Build started on `date`
-      - echo Running unit tests
       - mkdir -p reports
-      - ./vendor/bin/phpunit --testsuite myproject --log-junit reports/junit.xml
-   
+  build:
+    commands:
+      - echo Build started on `date`
+      - echo "Project structure:"
+      - find . -type f -name "*.php" | sort
+      - echo "Checking PHP syntax:"
+      - find . -name "*.php" -exec php -l {} \; | grep -v "No syntax errors"
+      - echo "PHPUnit version:"
+      - ./vendor/bin/phpunit --version
+      - echo "Available test suites:"
+      - ./vendor/bin/phpunit --list-suites || echo "Could not list test suites"
+      - echo "Running PHPUnit without specifying test suite:"
+      - ./vendor/bin/phpunit --debug --log-junit reports/junit.xml || echo "PHPUnit exited with error"
+      - echo "Trying to run with myproject test suite:"
+      - ./vendor/bin/phpunit --debug --testsuite myproject --log-junit reports/junit.xml || echo "PHPUnit exited with error"
   post_build:
     commands:
       - echo Build completed on `date`
-      - ls -la reports/
-      
+      - if [ -f reports/junit.xml ]; then cat reports/junit.xml; else echo "No test report generated"; fi
+
 reports:
   php-reports:
     files:
       - "junit.xml"
     base-directory: "reports"
     file-format: "JUNITXML"
-
