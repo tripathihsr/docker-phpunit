@@ -13,16 +13,13 @@ phases:
       - echo "Project structure:"
       - echo "PHPUnit version:"
       - ./vendor/bin/phpunit --version
-      - echo "Available test suites:"
-      - ./vendor/bin/phpunit --list-suites || echo "Could not list test suites"
-      - echo "Running PHPUnit without specifying test suite:"
-      - ./vendor/bin/phpunit --debug --log-junit reports/junit.xml || echo "PHPUnit exited with error"
       - echo "Trying to run with myproject test suite:"
-      - ./vendor/bin/phpunit --debug --testsuite myproject --log-junit reports/junit.xml || echo "PHPUnit exited with error"
+      - ./vendor/bin/phpunit --debug --testsuite myproject --log-junit reports/junit.xml 
+      
   post_build:
     commands:
       - echo Build completed on `date`
-      - if [ -f reports/junit.xml ]; then cat reports/junit.xml; else echo "No test report generated"; fi
+      - ls -l reports
 
 reports:
   php-reports:
