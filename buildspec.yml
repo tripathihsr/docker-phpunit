@@ -15,10 +15,10 @@ phases:
     commands:
       - echo Build completed on `date`
       
-  reports:
-    php-reports:
-      files:
-        - "*.xml"
-      base-directory: "reports"
-      file-format: "JUNITXML"
+reports:
+  php-reports:
+    files:
+      - "*.xml"
+    base-directory: "reports"
+    file-format: "JUNITXML"
 
