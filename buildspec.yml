@@ -8,7 +8,7 @@ phases:
     commands:
       - echo Build started on `date`
       - echo Running unit tests
-      - phpunit --testsuite unit
+      - docker run --rm -v $(pwd)/example01:/app/dcycle/phpunit:1 --group myproject
   post_build:
     commands:
       - echo Build completed on `date`
