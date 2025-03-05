@@ -6,6 +6,6 @@
     </testsuite>
   </testsuites>
   <logging>
-    <junit outputFile="reports/junit.xml"/>
+    <junit outputFile="vendor/reports/junit.xml"/>
   </logging>
 </phpunit>
