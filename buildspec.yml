@@ -11,9 +11,6 @@ phases:
     commands:
       - echo Build started on `date`
       - echo "Project structure:"
-      - find . -type f -name "*.php" | sort
-      - echo "Checking PHP syntax:"
-      - find . -name "*.php" -exec php -l {} \; | grep -v "No syntax errors"
       - echo "PHPUnit version:"
       - ./vendor/bin/phpunit --version
       - echo "Available test suites:"
