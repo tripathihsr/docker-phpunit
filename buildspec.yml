@@ -18,6 +18,7 @@ phases:
   reports:
     php-reports:
       files:
-        - "reports/php/*.xml"
+        - "*.xml"
+      base-directory: "reports"
       file-format: "JUNITXML"
 
