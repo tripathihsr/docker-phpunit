@@ -16,8 +16,8 @@ phases:
       - echo Build completed on `date`
       
   reports:
-  php-tests:
-    files:
-      - 'test-results/junit.xml'
-    file-format: JUNITXML
+    php-tests:
+      files:
+        - 'test-results/junit.xml'
+      file-format: JUNITXML
 
