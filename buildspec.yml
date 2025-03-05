@@ -6,10 +6,12 @@ phases:
       php: 8.2
   build:
     commands:
+      - composer install
       - echo Build started on `date`
       - echo Running unit tests
-      - docker run --rm -v $(pwd)/example01:/app dcycle/phpunit:1 --group myproject
       - mkdir -p reports
+      - phpunit --testsuite unit reports/junit.xml
+   
 
   post_build:
     commands:
@@ -20,5 +22,5 @@ reports:
     files:
       - "*.xml"
     base-directory: "reports"
-    file-format: "JUNITXML"
+    file-format: "XML"
 
