@@ -6,10 +6,11 @@ phases:
       php: 8.2
   build:
     commands:
+      - composer require --dev phpunit/phpunit
       - echo Build started on `date`
       - echo Running unit tests
       - mkdir -p reports
-      - docker run --rm -v $(pwd)/example01:/app dcycle/phpunit:1 --group myproject
+      - ./vendor/bin/phpunit --testsuite unit --log-junit reports/junit.xml
    
   post_build:
     commands:
