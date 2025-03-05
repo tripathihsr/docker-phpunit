@@ -1,0 +1,67 @@
+version: 0.2  # Specifies the buildspec version - 0.2 is the current recommended version
+
+phases:  # Defines the phases of the build process
+  install:  # First phase - install dependencies and tools
+    runtime-versions:  # Specifies the runtime environment versions
+      php: 7.4  # Defines which PHP version to use (can be 7.3, 7.4, 8.0, 8.1, etc.)
+    commands:  # Commands to run during this phase
+      - echo "Installing dependencies..."  # Log message for clarity
+      - apt-get update -y  # Update package lists
+      - apt-get install -y git zip unzip  # Install required system packages
+      # Install Composer (PHP dependency manager)
+      - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+      # Install PHP extensions if needed
+      - apt-get install -y php-mbstring php-xml php-curl php-dom  # Common extensions for testing
+      # Install project dependencies using Composer
+      - composer install --no-interaction --prefer-dist  # --no-interaction prevents interactive questions, --prefer-dist optimizes for performance
+
+  pre_build:  # Second phase - prepare the environment for testing
+    commands:
+      - echo "Setting up test environment..."
+      # Set environment variables required by the application
+      - export DIRECTORY="./src"  # Set environment variable used in App.php
+      # Copy configuration files if needed
+      # - cp phpunit.xml.dist phpunit.xml
+      # Create test database or other test resources if needed
+      # - mkdir -p ./tests/reports
+
+  build:  # Third phase - run the actual tests
+    commands:
+      - echo "Running PHP unit tests..."
+      # Run PHPUnit with various options
+      - vendor/bin/phpunit --colors=always  # Enable colored output
+                          --testdox  # Generate readable test output
+                          --log-junit phpunit-report.xml  # Generate JUnit XML report for CodeBuild
+                          # --coverage-clover=coverage.xml  # Generate code coverage report (uncomment if needed)
+                          # -c phpunit.xml  # Specify custom config file (uncomment if needed)
+
+  post_build:  # Final phase - cleanup and finalization
+    commands:
+      - echo "Unit tests completed on $(date)"
+      # Any cleanup tasks or result processing
+      # - cat phpunit-report.xml  # Display test results (for debugging)
+
+reports:  # Defines test reports to be processed by CodeBuild
+  php-tests:  # Report group name
+    files:  # Files to include in the report
+      - 'phpunit-report.xml'  # Path to the test report file
+    file-format: JUNITXML  # Format of the report file (JUnit XML is standard for test reports)
+    base-directory: './'  # Base directory where report files are located
+  # Uncomment for code coverage reporting
+  # coverage:
+  #   files:
+  #     - 'coverage.xml'
+  #   file-format: CLOVERXML  # Clover XML is standard for code coverage reports
+  #   base-directory: './'
+
+artifacts:  # Defines files to be saved after the build completes
+  files:  # List of files to save
+    - phpunit-report.xml
+    # - coverage.xml
+    # - tests/reports/**/*  # Can include wildcards for multiple files
+  discard-paths: yes  # Whether to discard path information when saving artifacts
+
+cache:  # Defines directories to cache between builds for faster subsequent builds
+  paths:
+    - '/root/.composer/cache/**/*'  # Cache Composer package downloads
+    - 'vendor/**/*'  # Cache installed dependencies
