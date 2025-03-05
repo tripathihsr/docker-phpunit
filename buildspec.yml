@@ -6,7 +6,7 @@ phases:
       php: 8.2
     commands:
       - composer require --dev phpunit/phpunit
-      - mkdir -p ./vendor/reports
+      - mkdir -p vendor/reports
   build:
     commands:
       - echo Build started on `date`
@@ -14,16 +14,16 @@ phases:
       - echo "PHPUnit version:"
       - ./vendor/bin/phpunit --version
       - echo "Trying to run with myproject test suite:"
-      - ./vendor/bin/phpunit --testsuite myproject --log-junit ./vendor/reports/junit.xml 
+      - ./vendor/bin/phpunit --testsuite myproject --log-junit vendor/reports/junit.xml 
       
   post_build:
     commands:
       - echo Build completed on `date`
-      - ls -l ./vendor/reports
+      - ls -l vendor/reports
 
 reports:
   php-reports:
     files:
       - "junit.xml"
-    base-directory: "./vendor/reports"
+    base-directory: "vendor/reports"
     file-format: "JUNITXML"
