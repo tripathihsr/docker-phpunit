@@ -14,11 +14,12 @@ phases:
   post_build:
     commands:
       - echo Build completed on `date`
+      - ls -la reports/
       
 reports:
   php-reports:
     files:
-      - "*.xml"
+      - "junit.xml"
     base-directory: "reports"
-    file-format: "XML"
+    file-format: "JUNITXML"
 
