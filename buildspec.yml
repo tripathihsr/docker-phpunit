@@ -9,6 +9,15 @@ phases:
       - echo Build started on `date`
       - echo Running unit tests
       - docker run --rm -v $(pwd)/example01:/app dcycle/phpunit:1 --group myproject
+      - mkdir -p test-results
+
   post_build:
     commands:
       - echo Build completed on `date`
+      
+  reports:
+  php-tests:
+    files:
+      - 'test-results/junit.xml'
+    file-format: JUNITXML
+
