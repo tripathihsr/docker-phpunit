@@ -10,7 +10,7 @@ phases:
       - echo Build started on `date`
       - echo Running unit tests
       - mkdir -p reports
-      - ./vendor/bin/phpunit --testsuite unit --log-junit reports/junit.xml
+      - ./vendor/bin/phpunit --verbose --testsuite myproject --log-junit reports/junit.xml
    
   post_build:
     commands:
