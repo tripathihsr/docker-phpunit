@@ -1,19 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         bootstrap="vendor/autoload.php"
-         colors="true">
-    <testsuites>
-        <testsuite name="myproject">
-            <directory>tests</directory>
-        </testsuite>
-    </testsuites>
-    <coverage>
-        <include>
-            <directory suffix=".php">src</directory>
-        </include>
-    </coverage>
-    <logging>
-        <junit outputFile="reports/junit.xml"/>
-    </logging>
+<phpunit bootstrap="phpunit-autoload.php">
+  <testsuites>
+    <testsuite name="myproject">
+      <directory>./test</directory>
+    </testsuite>
+  </testsuites>
+  <logging>
+    <junit outputFile="reports/junit.xml"/>
+  </logging>
 </phpunit>
-
